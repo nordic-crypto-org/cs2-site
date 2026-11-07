@@ -1,0 +1,11 @@
+.feed{margin:1.5rem 0}
+.feed .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+.feed .tabs button{font:inherit;padding:.3rem .7rem;border-radius:999px;border:1px solid #8884;background:transparent;color:inherit;cursor:pointer}
+.feed .tabs button[aria-pressed="true"]{background:#8882}
+.feed ol{list-style:none;margin:0;padding:0;max-height:22rem;overflow-y:auto;border:1px solid #8883;border-radius:.6rem;font-size:.92rem}
+.feed li{padding:.4rem .7rem;border-bottom:1px solid #8882;display:flex;gap:.5rem;align-items:baseline;overflow-wrap:anywhere}
+.feed li:last-child{border-bottom:0}
+.feed time{opacity:.6;font-size:.8rem;white-space:nowrap;min-width:3.2rem}
+.feed .srv{opacity:.6;font-size:.75rem;white-space:nowrap}
+.feed .CT{color:#5aa9e6}.feed .T{color:#e6b35a}.feed .hs{font-size:.75rem;opacity:.8}
+@media (max-width:540px){.feed li{flex-wrap:wrap}.feed ol{max-height:60vh}}
