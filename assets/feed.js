@@ -14,7 +14,7 @@
     case'map':return'Map changed to <code>'+esc(e.map)+'</code>'+(e.item?' ('+esc(e.item)+')':'');
     case'join':return who(e.a)+' joined · '+esc(e.n)+' online';
     case'leave':return who(e.a)+' left · '+esc(e.n)+' online';
-    case'voucher':return who(e.a)+' won a '+esc(e.item)+' voucher 🎉'+(e.win==='pending'?' (link a wallet to claim)':'');
+    case'voucher':return who(e.a)+' '+(e.win==='redeemed'?'redeemed a ':'won a ')+esc(e.item)+' voucher 🎉'+(e.win==='pending'?' (link a wallet to claim)':e.win==='redeemed'?' — redeemed ✅':'');
     default:return null}};
   let filter='',since=0,items=[];
   const time=t=>new Date(t*1000).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
