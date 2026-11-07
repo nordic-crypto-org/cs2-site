@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nordic Crypto CS2 server – Nexa testnet vouchers</title>
+<meta name="description" content="Join the Nordic Crypto Counter-Strike 2 server. Win matches and earn Nexa testnet demo vouchers. Testnet only, no monetary value.">
+<link rel="icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+:root{--teal:#1E3A45;--gold:#D9A034;--ink:#14262e;--bg:#f6f4ef}
+*{box-sizing:border-box}body{margin:0;font:17px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:#fff;border-bottom:4px solid var(--gold)}.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}header img{height:36px}
+header a.back{color:var(--teal);font-weight:600;text-decoration:none}
+.hero{background:var(--teal);color:#fff;text-align:center;padding:48px 0 40px}.hero h1{margin:0 0 8px;font-size:2rem}
+.btn{display:inline-block;background:var(--gold);color:var(--teal);font-weight:800;font-size:1.35rem;padding:18px 40px;border-radius:12px;text-decoration:none;margin:18px 0 10px;box-shadow:0 4px 0 #a97a22}
+.btn:hover{filter:brightness(1.07)}.addr{font-family:ui-monospace,Menlo,monospace;background:rgba(255,255,255,.12);padding:4px 10px;border-radius:6px}
+.hero small a{color:#f3d48f}
+.warn{background:#fff3d6;border:2px solid var(--gold);border-radius:10px;padding:14px 18px;margin:28px 0;font-weight:600}
+h2{color:var(--teal);margin-top:36px}code,kbd{font-family:ui-monospace,Menlo,monospace;background:#e9e5da;padding:1px 6px;border-radius:4px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{border-bottom:1px solid #ddd6c6;padding:6px 8px;text-align:left}th{color:var(--teal)}
+.copy{cursor:pointer;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:6px;padding:2px 10px;font:inherit;font-size:.85rem;margin-left:6px}
+footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-size:.9rem}footer a{color:#f3d48f}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="https://nordiccrypto.no"><img src="assets/lockup.svg" alt="Nordic Crypto"></a><a class="back" href="https://nordiccrypto.no">nordiccrypto.no →</a></div></header>
+
+<section class="hero"><div class="wrap">
+<h1>Nordic Crypto CS2 server</h1>
+<p>Play Counter-Strike 2 on the Nordic Crypto server. Nexa <strong>testnet</strong> voucher awards for match wins are coming soon. Free to play – nothing to buy, nothing to stake.</p>
+<a class="btn" href="steam://connect/2.29.154.63:27015">▶ Join server</a>
+<p>Server address: <span class="addr" id="addr">2.29.154.63:27015</span></p>
+<small>Steam must be installed and running. Button does nothing? Try <a href="steam://run/730//+connect%202.29.154.63:27015">this alternative link</a> or <a href="#manual">join manually</a>.</small>
+</div></section>
+
+<main class="wrap">
+<div class="warn">⚠ TESTNET ONLY. Vouchers from this server (once live) are demo records on the Nexa testnet. They have no monetary value and cannot be redeemed for food, goods or money.</div>
+
+<h2 id="manual">Join manually</h2>
+<ol>
+<li>Start CS2. Open <strong>Settings → Game</strong> and set <strong>Enable Developer Console (~)</strong> to <strong>Yes</strong>.</li>
+<li>Press <kbd>~</kbd> (the key below Esc, left of 1) to open the console.</li>
+<li>Type <code id="cmd">connect 2.29.154.63:27015</code><button class="copy" data-copy="connect 2.29.154.63:27015">Copy</button> and press Enter.</li>
+</ol>
+<p>You can also add <code>2.29.154.63:27015</code> under Favorites in the CS2 Community Server Browser, or in Steam under <strong>View → Game Servers → Favorites</strong>.</p>
+
+<h2>How vouchers will work (coming soon)</h2>
+<p><strong>Voucher awards are not issuing yet.</strong> The plugin is installed in testnet mode, but the voucher backend is not live, so <code>!nexa</code> linking and awards do not work today. When it goes live, it works like this:</p>
+<ol>
+<li>Join the server and type <code>!nexa</code> in chat.</li>
+<li>Open the link the server prints. It shows a <code>nexid://</code> link for a Nexa wallet. It does not ask for a name or an email.</li>
+<li>Approve the signature in your wallet. The address must be a Nexa testnet address (<code>nexatest:</code>).</li>
+<li>Win. If you win before linking, the voucher is held and issued once you link.</li>
+</ol>
+<p>Only your SteamID64, your Nexa address and timestamps are stored for the link. On testnet, a voucher is a demo record in the backend (labelled pizza, burger or water); it is not a mainnet token. Mainnet issuance is switched off in the code.</p>
+
+<h2>Game modes</h2>
+<p>The plugin detects the current mode on each map and round start. Once awards are live, a match must last a minimum time and have a minimum number of human players before anyone gets a voucher. Bots never earn vouchers.</p>
+<table>
+<tr><th>Mode</th><th>Who wins a voucher</th><th>Min players</th><th>Min length</th></tr>
+<tr><td>Casual</td><td>Winning team (up to 5)</td><td>4</td><td>3 min</td></tr>
+<tr><td>Competitive</td><td>Winning team (up to 5)</td><td>6</td><td>8 min</td></tr>
+<tr><td>Premier-style</td><td>Winning team (up to 5)</td><td>8</td><td>10 min</td></tr>
+<tr><td>Wingman</td><td>Winning team (up to 2)</td><td>3</td><td>4 min</td></tr>
+<tr><td>Weapons Expert</td><td>Winning team (up to 5)</td><td>6</td><td>8 min</td></tr>
+<tr><td>Deathmatch</td><td>Top fragger</td><td>4</td><td>3 min</td></tr>
+<tr><td>Arms Race</td><td>First golden-knife kill</td><td>2</td><td>1 min</td></tr>
+<tr><td>Demolition</td><td>Winning team (up to 5)</td><td>4</td><td>3 min</td></tr>
+<tr><td>Retakes</td><td>Winning team (up to 3)</td><td>3</td><td>3 min</td></tr>
+<tr><td>Rush</td><td>Winning team (up to 3)</td><td>4</td><td>3 min</td></tr>
+<tr><td>1v1 / duel maps</td><td>First to 8 round wins</td><td>2</td><td>45 s</td></tr>
+<tr><td>Aim maps (<code>aim_</code>, <code>awp_</code>)</td><td>Top fragger</td><td>2</td><td>2 min</td></tr>
+<tr><td>Custom / Workshop</td><td>Winning team (up to 5)</td><td>2</td><td>2 min</td></tr>
+<tr><td>Skirmish</td><td>Winning team (up to 5)</td><td>4</td><td>3 min</td></tr>
+</table>
+<p>These are the plugin's default rules; the server operator can change them in the config. Automatic awards are limited to 4 per player per rolling hour.</p>
+
+<h2>About the plugin</h2>
+<p><strong>Nexa Vouchers</strong> is an open-source (MIT) <a href="https://github.com/roflmuffin/CounterStrikeSharp">CounterStrikeSharp</a> plugin for Counter-Strike 2 dedicated servers, with a Cloudflare Worker backend.</p>
+<ul>
+<li>Each award is signed with HMAC-SHA256; the backend checks the signature and rejects replays and stale timestamps.</li>
+<li>Network setting: <code>testnet</code>, <code>regtest</code> or <code>mainnet</code>. Mainnet is a stub that refuses to issue.</li>
+<li>Tested in CI, including a regtest end-to-end suite against a local Nexa node.</li>
+</ul>
+<p><a href="https://gitlab.com/jQrgen/cs2-nexa-vouchers">Source code on GitLab →</a></p>
+</main>
+
+<footer><div class="wrap">Run by <a href="https://nordiccrypto.no">Nordic Crypto</a>. Contact: <a href="mailto:jqrgen@nordiccrypto.no">jqrgen@nordiccrypto.no</a>. Counter-Strike 2 is a trademark of Valve Corporation; this server is not affiliated with Valve.</div></footer>
+<script>
+document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.copy).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})});
+</script>
+</body>
+</html>
