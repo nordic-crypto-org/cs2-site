@@ -61,7 +61,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <p id="srv"><span class="dot"></span>Loading server status…</p>
 <h3>Latest winners</h3>
 <table><thead><tr><th>Token</th><th>Mode</th><th>When</th><th>Status</th></tr></thead><tbody id="wins"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody></table>
-<p class="muted"><img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Unclaimed = won, but the player has not linked a wallet yet. Claimed = issued; the link opens the transaction on the Nexa testnet explorer. No Steam IDs or names are shown. Updates every 30 seconds.</p>
+<p class="muted"><img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Unclaimed = won, but the player has not linked a wallet yet. Claimed = issued; the link opens the transaction on the Nexa testnet explorer. This winners list shows no Steam IDs or player names and updates every 30 seconds. (The live feed above shows in-game names, never Steam IDs.)</p>
 </section>
 
 <h2 id="manual">Join manually</h2>
@@ -71,6 +71,15 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <li>Type <code id="cmd">connect 2.29.154.63:27015</code><button class="copy" data-copy="connect 2.29.154.63:27015">Copy</button> and press Enter.</li>
 </ol>
 <p>You can also add <code>2.29.154.63:27015</code> under Favorites in the CS2 Community Server Browser, or in Steam under <strong>View → Game Servers → Favorites</strong>.</p>
+
+<h2>Why this demo</h2>
+<p>This is a demo of a new way to sponsor LAN parties:</p>
+<ol>
+<li>Players win voucher tokens, such as WATER, by playing.</li>
+<li>At the event's cafeteria, a player redeems a voucher by melting the token on-chain.</li>
+<li>After the event, the CS2 admin or the sponsor settles the bill with the cafeteria. The bill is based on how many tokens were redeemed (melted) on-chain.</li>
+</ol>
+<p class="muted">This runs on Nexa <strong>testnet</strong> only. The tokens have no real value. The demo is run by Nordic Crypto.</p>
 
 <h2>How vouchers work</h2>
 <p>Vouchers are issued as <img class="nt" src="assets/nexa-testnet.png" alt="" width="16" height="16">Nexa testnet tokens (WATER, PIZZA or BURGER) when you win in-game, following the rules for each game mode below. Automatic awards are limited to 4 per player per rolling hour.</p>
@@ -128,7 +137,7 @@ async function refresh(){
   try{const s=await j('/stats');const list=s.servers||[];
     const names={'cs2-vouchers-1':['Aim / AWP','2.29.154.63:27015'],'cs2-gungame-1':['Gun Game (Arms Race)','2.29.154.63:27025']};
     const row=v=>{const n=names[v.serverId]||[v.serverId,''];const label='<strong>'+esc(n[0])+'</strong>'+(n[1]?' <a href="steam://connect/'+esc(n[1])+'">'+esc(n[1])+'</a>':'');
-      return v.online?'<span class="dot on"></span>'+label+' – online – '+esc(v.players)+' / '+esc(v.maxPlayers)+' players · map <code>'+esc(v.map)+'</code> · '+esc(v.mode)
+      return v.online?'<span class="dot on"></span>'+label+' – online – '+esc(v.players)+' '+(v.players===1?'human':'humans')+(v.bots!=null?' + '+esc(v.bots)+' '+(v.bots===1?'bot':'bots'):'')+' / '+esc(v.maxPlayers)+' · map <code>'+esc(v.map)+'</code> · '+esc(v.mode)
         :'<span class="dot off"></span>'+label+' – offline – last seen '+ago(v.lastSeen)};
     srv.innerHTML=list.length?list.map(row).join('<br>'):'<span class="dot"></span>No status reported yet.';
   }catch(e){srv.innerHTML='<span class="dot"></span>Live status is unavailable right now. You can still try to join.'}
