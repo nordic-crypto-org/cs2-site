@@ -23,10 +23,12 @@ table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{border-bottom:1
 .copy{cursor:pointer;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:6px;padding:2px 10px;font:inherit;font-size:.85rem;margin-left:6px}
 footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-size:.9rem}footer a{color:#f3d48f}
 .nt{width:1em;height:1em;vertical-align:-.12em;margin-right:.15em}
+.ww{width:16px;height:16px;vertical-align:-.22em;margin:0 .22em 0 .04em;flex:none}
+.tag .ww{margin:0}
 .netbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border-radius:999px;padding:6px 14px;margin-bottom:12px;font-weight:600}.netbadge img{width:28px;height:28px}
 .live{background:#fff;border:1px solid #ddd6c6;border-radius:12px;padding:16px 20px;margin:24px 0}.live h2{margin-top:0}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#999;margin-right:6px}.dot.on{background:#2e9e5b}.dot.off{background:#c0392b}
-.tag{font-size:.8rem;font-weight:700;padding:1px 8px;border-radius:999px}.tag.c{background:#d9f0e2;color:#1d6b3d}.tag.u{background:#eee;color:#555}
+.tag{display:inline-flex;align-items:center;gap:.28em;white-space:nowrap;vertical-align:baseline;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px}.tag.c{background:#d9f0e2;color:#1d6b3d}.tag.u{background:#eee;color:#555}
 .muted{color:#6b7a80;font-size:.9rem}
 </style>
 </head>
@@ -50,7 +52,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <p id="srv"><span class="dot"></span>Loading server status…</p>
 <h3>Latest winners</h3>
 <table><thead><tr><th>Token</th><th>Mode</th><th>When</th><th>Status</th></tr></thead><tbody id="wins"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody></table>
-<p class="muted">Unclaimed = won, but the player has not linked a wallet yet. Claimed = issued; the link opens the transaction on the Nexa testnet explorer. No Steam IDs or names are shown. Updates every 30 seconds.</p>
+<p class="muted"><img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Unclaimed = won, but the player has not linked a wallet yet. Claimed = issued; the link opens the transaction on the Nexa testnet explorer. No Steam IDs or names are shown. Updates every 30 seconds.</p>
 </section>
 
 <h2 id="manual">Join manually</h2>
@@ -63,11 +65,11 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 
 <h2>How vouchers work</h2>
 <p>Vouchers are issued as <img class="nt" src="assets/nexa-testnet.png" alt="" width="16" height="16">Nexa testnet tokens (WATER, PIZZA or BURGER) when you win in-game, following the rules for each game mode below. Automatic awards are limited to 4 per player per rolling hour.</p>
-<p><strong>Linking your Steam ID to a Wally wallet is coming soon.</strong> It is still being tested. Wins before you link are saved and paid out once linking opens. When it opens, it will work like this:</p>
+<p><strong>Linking your Steam ID to a <img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Wally wallet is coming soon.</strong> It is still being tested. Wins before you link are saved and paid out once linking opens. When it opens, it will work like this:</p>
 <ol>
 <li>Join the server and type <code>!nexa</code> in chat.</li>
-<li>Open the link the server prints. It shows a <code>nexid://</code> link for a Nexa wallet. It does not ask for a name or an email.</li>
-<li>Approve the signature in your wallet. The address must be a Nexa testnet address (<code>nexatest:</code>).</li>
+<li>Open the link the server prints. It shows a <code>nexid://</code> link for a Nexa wallet. Open it in <img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Wally on your phone or in Wally Desktop. It does not ask for a name or an email.</li>
+<li>Approve the signature in your <img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Wally wallet. The address must be a Nexa testnet address (<code>nexatest:</code>).</li>
 <li>Win. If you win before linking, the voucher is held and issued once you link.</li>
 </ol>
 <p>Only your SteamID64, your Nexa address and timestamps are stored for the link. Vouchers are testnet tokens only; mainnet issuance is switched off in the code.</p>
@@ -103,11 +105,12 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <p><a href="https://gitlab.com/jQrgen/cs2-nexa-vouchers">Source code on GitLab →</a></p>
 </main>
 
-<footer><div class="wrap">Run by <a href="https://nordiccrypto.no">Nordic Crypto</a>. Contact: <a href="mailto:jqrgen@nordiccrypto.no">jqrgen@nordiccrypto.no</a>. Counter-Strike 2 is a trademark of Valve Corporation; this server is not affiliated with Valve. Nexa testnet logo from the <a href="https://gitlab.com/wallywallet/wallet">Wally Wallet</a> project (MIT); the server is run by Nordic Crypto and is not operated or endorsed by Nexa or Bitcoin Unlimited.</div></footer>
+<footer><div class="wrap">Run by <a href="https://nordiccrypto.no">Nordic Crypto</a>. Contact: <a href="mailto:jqrgen@nordiccrypto.no">jqrgen@nordiccrypto.no</a>. Counter-Strike 2 is a trademark of Valve Corporation; this server is not affiliated with Valve. Nexa testnet logo (<a href="https://gitlab.com/wallywallet/wallet/-/blob/main/shared/src/commonMain/resources/icons/nexatest_icon.png">nexatest_icon.png</a>) and Wally Wallet logo (<a href="https://gitlab.com/wallywallet/wallet/-/blob/main/shared/src/commonMain/resources/icons/wallyicon2024_800x800.png">wallyicon2024_800x800.png</a>) from the <a href="https://gitlab.com/wallywallet/wallet">Wally Wallet</a> project (MIT, Copyright 2019 Andrew Stone Consulting); the server is run by Nordic Crypto and is not operated or endorsed by Nexa, Wally Wallet, or Bitcoin Unlimited.</div></footer>
 <script>
 document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.copy).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})});
 
 const API='https://cs2-api.nordiccrypto.workers.dev';
+const wallyIcon='<img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">';
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ago=t=>{const d=Math.max(0,Math.floor(Date.now()/1000)-t);return d<60?d+' s ago':d<3600?Math.floor(d/60)+' min ago':d<86400?Math.floor(d/3600)+' h ago':new Date(t*1000).toLocaleDateString()};
 async function j(path){const r=await fetch(API+path,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
@@ -119,7 +122,7 @@ async function refresh(){
     else srv.innerHTML='<span class="dot off"></span><strong>Offline</strong> – last seen '+ago(v.lastSeen);
   }catch(e){srv.innerHTML='<span class="dot"></span>Live status is unavailable right now. You can still try to join.'}
   try{const w=await j('/winners');const rows=w.winners||[];
-    wins.innerHTML=rows.length?rows.map(r=>'<tr><td>'+esc(r.token)+'</td><td>'+esc(r.mode)+'</td><td>'+ago(r.time)+'</td><td>'+(r.status==='Claimed'?'<span class="tag c">Claimed</span>'+(r.txUrl&&/^https:\/\/testnet-explorer\.nexa\.org\/tx\/[0-9a-f]{64}$/.test(r.txUrl)?' <a href="'+esc(r.txUrl)+'" rel="noopener" target="_blank">tx</a>':'')+(r.recipient?' <span class="muted">'+esc(r.recipient)+'</span>':''):'<span class="tag u">Unclaimed</span>')+'</td></tr>').join(''):'<tr><td colspan="4" class="muted">No wins yet.</td></tr>';
+    wins.innerHTML=rows.length?rows.map(r=>'<tr><td>'+esc(r.token)+'</td><td>'+esc(r.mode)+'</td><td>'+ago(r.time)+'</td><td>'+(r.status==='Claimed'?'<span class="tag c">'+wallyIcon+'Claimed</span>'+(r.txUrl&&/^https:\/\/testnet-explorer\.nexa\.org\/tx\/[0-9a-f]{64}$/.test(r.txUrl)?' <a href="'+esc(r.txUrl)+'" rel="noopener" target="_blank">tx</a>':'')+(r.recipient?' <span class="muted">'+esc(r.recipient)+'</span>':''):'<span class="tag u">Unclaimed</span>')+'</td></tr>').join(''):'<tr><td colspan="4" class="muted">No wins yet.</td></tr>';
   }catch(e){wins.innerHTML='<tr><td colspan="4" class="muted">Winners list is unavailable right now.</td></tr>'}
 }
 refresh();setInterval(refresh,30000);
