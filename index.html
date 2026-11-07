@@ -29,14 +29,14 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 
 <section class="hero"><div class="wrap">
 <h1>Nordic Crypto CS2 server</h1>
-<p>Play Counter-Strike 2 on the Nordic Crypto server. Nexa <strong>testnet</strong> voucher awards for match wins are coming soon. Free to play – nothing to buy, nothing to stake.</p>
+<p>Play Counter-Strike 2 on the Nordic Crypto server and win Nexa <strong>testnet</strong> voucher tokens for in-game wins. Free to play – nothing to buy, nothing to stake.</p>
 <a class="btn" href="steam://connect/2.29.154.63:27015">▶ Join server</a>
 <p>Server address: <span class="addr" id="addr">2.29.154.63:27015</span></p>
 <small>Steam must be installed and running. Button does nothing? Try <a href="steam://run/730//+connect%202.29.154.63:27015">this alternative link</a> or <a href="#manual">join manually</a>.</small>
 </div></section>
 
 <main class="wrap">
-<div class="warn">⚠ TESTNET ONLY. Vouchers from this server (once live) are demo records on the Nexa testnet. They have no monetary value and cannot be redeemed for food, goods or money.</div>
+<div class="warn">⚠ TESTNET ONLY. Vouchers are WATER, PIZZA and BURGER tokens on the Nexa testnet. They have no real value, cannot be cashed out or redeemed for food, goods or money, and are not Steam items.</div>
 
 <h2 id="manual">Join manually</h2>
 <ol>
@@ -46,18 +46,19 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 </ol>
 <p>You can also add <code>2.29.154.63:27015</code> under Favorites in the CS2 Community Server Browser, or in Steam under <strong>View → Game Servers → Favorites</strong>.</p>
 
-<h2>How vouchers will work (coming soon)</h2>
-<p><strong>Voucher awards are not issuing yet.</strong> The plugin is installed in testnet mode, but the voucher backend is not live, so <code>!nexa</code> linking and awards do not work today. When it goes live, it works like this:</p>
+<h2>How vouchers work</h2>
+<p>Vouchers are issued as Nexa testnet tokens (WATER, PIZZA or BURGER) when you win in-game, following the rules for each game mode below. Automatic awards are limited to 4 per player per rolling hour.</p>
+<p><strong>Linking your Steam ID to a Wally wallet is coming soon.</strong> It is still being tested. When it opens, it will work like this:</p>
 <ol>
 <li>Join the server and type <code>!nexa</code> in chat.</li>
 <li>Open the link the server prints. It shows a <code>nexid://</code> link for a Nexa wallet. It does not ask for a name or an email.</li>
 <li>Approve the signature in your wallet. The address must be a Nexa testnet address (<code>nexatest:</code>).</li>
 <li>Win. If you win before linking, the voucher is held and issued once you link.</li>
 </ol>
-<p>Only your SteamID64, your Nexa address and timestamps are stored for the link. On testnet, a voucher is a demo record in the backend (labelled pizza, burger or water); it is not a mainnet token. Mainnet issuance is switched off in the code.</p>
+<p>Only your SteamID64, your Nexa address and timestamps are stored for the link. Vouchers are testnet tokens only; mainnet issuance is switched off in the code.</p>
 
 <h2>Game modes</h2>
-<p>The plugin detects the current mode on each map and round start. Once awards are live, a match must last a minimum time and have a minimum number of human players before anyone gets a voucher. Bots never earn vouchers.</p>
+<p>The plugin detects the current mode on each map and round start. A match must last a minimum time and have a minimum number of human players before anyone gets a voucher. Bots never earn vouchers.</p>
 <table>
 <tr><th>Mode</th><th>Who wins a voucher</th><th>Min players</th><th>Min length</th></tr>
 <tr><td>Casual</td><td>Winning team (up to 5)</td><td>4</td><td>3 min</td></tr>
