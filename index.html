@@ -113,10 +113,12 @@ const ago=t=>{const d=Math.max(0,Math.floor(Date.now()/1000)-t);return d<60?d+' 
 async function j(path){const r=await fetch(API+path,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
 async function refresh(){
   const srv=document.getElementById('srv'),wins=document.getElementById('wins');
-  try{const s=await j('/stats');const v=(s.servers||[])[0];
-    if(!v)srv.innerHTML='<span class="dot"></span>No status reported yet.';
-    else if(v.online)srv.innerHTML='<span class="dot on"></span><strong>Online</strong> – '+esc(v.players)+' / '+esc(v.maxPlayers)+' players · map <code>'+esc(v.map)+'</code> · '+esc(v.mode);
-    else srv.innerHTML='<span class="dot off"></span><strong>Offline</strong> – last seen '+ago(v.lastSeen);
+  try{const s=await j('/stats');const list=s.servers||[];
+    const names={'cs2-vouchers-1':['Aim / AWP','2.29.154.63:27015'],'cs2-gungame-1':['Gun Game (Arms Race)','2.29.154.63:27025']};
+    const row=v=>{const n=names[v.serverId]||[v.serverId,''];const label='<strong>'+esc(n[0])+'</strong>'+(n[1]?' <a href="steam://connect/'+esc(n[1])+'">'+esc(n[1])+'</a>':'');
+      return v.online?'<span class="dot on"></span>'+label+' – online – '+esc(v.players)+' / '+esc(v.maxPlayers)+' players · map <code>'+esc(v.map)+'</code> · '+esc(v.mode)
+        :'<span class="dot off"></span>'+label+' – offline – last seen '+ago(v.lastSeen)};
+    srv.innerHTML=list.length?list.map(row).join('<br>'):'<span class="dot"></span>No status reported yet.';
   }catch(e){srv.innerHTML='<span class="dot"></span>Live status is unavailable right now. You can still try to join.'}
   try{const w=await j('/winners');const rows=w.winners||[];
     wins.innerHTML=rows.length?rows.map(r=>'<tr><td>'+esc(r.token)+'</td><td>'+esc(r.mode)+'</td><td>'+ago(r.time)+'</td><td>'+(r.status==='Claimed'?'<span class="tag c">Claimed</span>'+(r.txUrl&&/^https:\/\/testnet-explorer\.nexa\.org\/tx\/[0-9a-f]{64}$/.test(r.txUrl)?' <a href="'+esc(r.txUrl)+'" rel="noopener" target="_blank">tx</a>':'')+(r.recipient?' <span class="muted">'+esc(r.recipient)+'</span>':''):'<span class="tag u">Unclaimed</span>')+'</td></tr>').join(''):'<tr><td colspan="4" class="muted">No wins yet.</td></tr>';
