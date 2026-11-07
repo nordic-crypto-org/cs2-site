@@ -29,6 +29,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 .tag{font-size:.8rem;font-weight:700;padding:1px 8px;border-radius:999px}.tag.c{background:#d9f0e2;color:#1d6b3d}.tag.u{background:#eee;color:#555}
 .muted{color:#6b7a80;font-size:.9rem}
 </style>
+<link rel="stylesheet" href="assets/feed.css">
 </head>
 <body>
 <header><div class="wrap"><a href="https://nordiccrypto.no"><img src="assets/lockup.svg" alt="Nordic Crypto"></a><a class="back" href="https://nordiccrypto.no">nordiccrypto.no →</a></div></header>
@@ -44,6 +45,14 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 
 <main class="wrap">
 <div class="warn">⚠ TESTNET ONLY. Vouchers are WATER, PIZZA and BURGER tokens on the <img class="nt" src="assets/nexa-testnet.png" alt="" width="16" height="16">Nexa testnet. They have no real value, cannot be cashed out or redeemed for food, goods or money, and are not Steam items.</div>
+
+<section class="feed">
+<h2>Live feed</h2>
+<div class="tabs" id="feed-tabs"><button data-server="" aria-pressed="true">All</button><button data-server="cs2-vouchers-1" aria-pressed="false">Aim</button><button data-server="cs2-gungame-1" aria-pressed="false">Gun Game</button></div>
+<ol id="feed" aria-live="polite"><li class="muted">Loading…</li></ol>
+<p class="muted">Kills, rounds, map changes and voucher wins from our servers, updated every few seconds. Names are in-game names; no Steam IDs.</p>
+</section>
+<script src="assets/feed.js" defer></script>
 
 <section class="live" aria-live="polite">
 <h2>Live</h2>
