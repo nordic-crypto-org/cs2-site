@@ -14,6 +14,8 @@
     {label:'Derax.gg Gun Game',href:'https://derax.gg/cs2/640d213b-4041-45ff-ab8c-b4d689c5cd3d'},
     {label:'ServerTilt Aim/AWP',href:'https://www.servertilt.com/counter-strike-2-servers/nordic-crypto-aim-awp-finland-helsinki-testnet-vouchers'},
     {label:'ServerTilt Gun Game',href:'https://www.servertilt.com/counter-strike-2-servers/nordic-crypto-gun-game-finland-helsinki-testnet-vouchers'},
+    {label:'GameTracker Aim/AWP',href:'https://www.gametracker.com/server_info/2.29.154.63:27015/'},
+    {label:'GameTracker Gun Game',href:'https://www.gametracker.com/server_info/2.29.154.63:27025/'},
     {label:'Steam server browser',text:'search "Nordic Crypto"'},
     {label:'Nordic Crypto Telegram',href:'https://t.me/nordiccryptochat',group:'Community'},
   ];
