@@ -1,9 +1,10 @@
 // Live feed from https://cs2-api.nordiccrypto.workers.dev/feed (names are in-game names; no Steam IDs or IPs).
 (()=>{
   const API='https://cs2-api.nordiccrypto.workers.dev';
-  const NAMES={'cs2-vouchers-1':'Aim','cs2-gungame-1':'Gun Game'};
+  const NAMES=Object.fromEntries(Object.entries(window.NC_SERVERS||{}).map(([id,s])=>[id,s.short||s.name]));
   const list=document.getElementById('feed'),tabs=document.getElementById('feed-tabs');
   if(!list)return;
+  if(tabs)tabs.querySelectorAll('button[data-server]').forEach(b=>{const s=(window.NC_SERVERS||{})[b.dataset.server];if(s){b.textContent=s.short||s.name;b.title=s.name}});
   const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const who=(n,team)=>'<b class="'+(team==='CT'||team==='T'?team:'')+'">'+esc(n||'Player')+'</b>';
   const line=e=>{switch(e.type){

@@ -1,7 +1,7 @@
 // Stats pages for cs2.nordiccrypto.no. Everything from the API is escaped; player ids must be 16 hex chars.
 (function () {
   const API = 'https://cs2-api.nordiccrypto.workers.dev';
-  const SERVERS = { 'cs2-vouchers-1': 'Aim / AWP', 'cs2-gungame-1': 'Gun Game (Arms Race)' };
+  const SERVERS = Object.fromEntries(Object.entries(window.NC_SERVERS || {}).map(([id, s]) => [id, s.name]));
   const BOARDS = { kills: 'Kills', kd: 'K/D', hs: 'Headshot %', accuracy: 'Accuracy', wins: 'Wins', ggwins: 'Gun Game wins', playtime: 'Playtime', mvps: 'MVPs', damage: 'Damage', streak: 'Best streak', knife: 'Knife kills', headshots: 'Headshots' };
   const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const isId = (id) => typeof id === 'string' && /^[0-9a-f]{16}$/.test(id);

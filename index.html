@@ -32,6 +32,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 .muted{color:#6b7a80;font-size:.9rem}
 </style>
 <link rel="stylesheet" href="assets/feed.css">
+<link rel="stylesheet" href="assets/find-us.css">
 </head>
 <body>
 <header><div class="wrap"><a href="https://nordiccrypto.no"><img src="assets/lockup.svg" alt="Nordic Crypto"></a><a class="back" href="https://nordiccrypto.no">nordiccrypto.no →</a></div></header>
@@ -51,7 +52,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 
 <section class="feed">
 <h2>Live feed <a class="muted" style="font-size:.9rem;font-weight:400" href="stats.html">· Stats &amp; leaderboards →</a></h2>
-<div class="tabs" id="feed-tabs"><button data-server="" aria-pressed="true">All</button><button data-server="cs2-vouchers-1" aria-pressed="false">Aim</button><button data-server="cs2-gungame-1" aria-pressed="false">Gun Game</button></div>
+<div class="tabs" id="feed-tabs"><button data-server="" aria-pressed="true">All</button><button data-server="cs2-vouchers-1" aria-pressed="false" title="Nordic Crypto | Aim/AWP | Finland (Helsinki) | Testnet vouchers">Aim/AWP</button><button data-server="cs2-gungame-1" aria-pressed="false" title="Nordic Crypto | Gun Game | Finland (Helsinki) | Testnet vouchers">Gun Game</button></div>
 <ol id="feed" aria-live="polite"><li class="muted">Loading…</li></ol>
 <p class="muted">Kills, rounds, map changes and voucher wins from our servers, updated every few seconds. Names are in-game names; no Steam IDs.</p>
 </section>
@@ -132,6 +133,8 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 </main>
 
 <footer><div class="wrap">Run by <a href="https://nordiccrypto.no">Nordic Crypto</a>. Contact: <a href="mailto:jqrgen@nordiccrypto.no">jqrgen@nordiccrypto.no</a>. Counter-Strike 2 is a trademark of Valve Corporation; this server is not affiliated with Valve. Nexa testnet logo (<a href="https://gitlab.com/wallywallet/wallet/-/blob/main/shared/src/commonMain/resources/icons/nexatest_icon.png">nexatest_icon.png</a>) and Wally Wallet logo (<a href="https://gitlab.com/wallywallet/wallet/-/blob/main/shared/src/commonMain/resources/icons/wallyicon2024_800x800.png">wallyicon2024_800x800.png</a>) from the <a href="https://gitlab.com/wallywallet/wallet">Wally Wallet</a> project (MIT, Copyright 2019 Andrew Stone Consulting); the server is run by Nordic Crypto and is not operated or endorsed by Nexa, Wally Wallet, or Bitcoin Unlimited.</div></footer>
+<script src="assets/servers.js"></script>
+<script src="assets/find-us.js"></script>
 <script>
 document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.copy).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})});
 
@@ -140,11 +143,12 @@ const wallyIcon='<img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ago=t=>{const d=Math.max(0,Math.floor(Date.now()/1000)-t);return d<60?d+' s ago':d<3600?Math.floor(d/60)+' min ago':d<86400?Math.floor(d/3600)+' h ago':new Date(t*1000).toLocaleDateString()};
 async function j(path){const r=await fetch(API+path,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
+const connect={'cs2-vouchers-1':'2.29.154.63:27015','cs2-gungame-1':'2.29.154.63:27025'};
+const serverName=id=>{const s=(window.NC_SERVERS||{})[id];return s&&s.name?s.name:id};
 async function refresh(){
   const srv=document.getElementById('srv'),wins=document.getElementById('wins');
   try{const s=await j('/stats');const list=s.servers||[];
-    const names={'cs2-vouchers-1':['Aim / AWP','2.29.154.63:27015'],'cs2-gungame-1':['Gun Game (Arms Race)','2.29.154.63:27025']};
-    const row=v=>{const n=names[v.serverId]||[v.serverId,''];const label='<strong>'+esc(n[0])+'</strong>'+(n[1]?' <a href="steam://connect/'+esc(n[1])+'">'+esc(n[1])+'</a>':'');
+    const row=v=>{const addr=connect[v.serverId]||'';const label='<strong>'+esc(serverName(v.serverId))+'</strong>'+(addr?' <a href="steam://connect/'+esc(addr)+'">'+esc(addr)+'</a>':'');
       return v.online?'<span class="dot on"></span>'+label+' – online – '+esc(v.players)+' '+(v.players===1?'human':'humans')+(v.bots!=null?' + '+esc(v.bots)+' '+(v.bots===1?'bot':'bots'):'')+' / '+esc(v.maxPlayers)+' · map <code>'+esc(v.map)+'</code> · '+esc(v.mode)
         :'<span class="dot off"></span>'+label+' – offline – last seen '+ago(v.lastSeen)};
     srv.innerHTML=list.length?list.map(row).join('<br>'):'<span class="dot"></span>No status reported yet.';
@@ -153,8 +157,8 @@ async function refresh(){
     wins.innerHTML=rows.length?rows.map(r=>'<tr><td>'+(r.name?(r.playerId&&/^[0-9a-f]{16}$/.test(r.playerId)?'<a href="player.html?id='+r.playerId+'">'+esc(r.name)+'</a>':esc(r.name)):'<span class="muted">–</span>')+'</td><td>'+esc(r.token)+'</td><td>'+esc(r.mode)+'</td><td>'+ago(r.time)+'</td><td>'+(r.status==='Claimed'?'<span class="tag c">'+wallyIcon+'Claimed</span>'+(r.txUrl&&/^https:\/\/testnet-explorer\.nexa\.org\/tx\/[0-9a-f]{64}$/.test(r.txUrl)?' <a href="'+esc(r.txUrl)+'" rel="noopener" target="_blank">tx</a>':'')+(r.recipient?' <span class="muted">'+esc(r.recipient)+'</span>':''):'<span class="tag u">Unclaimed</span>')+'</td></tr>').join(''):'<tr><td colspan="5" class="muted">No wins yet.</td></tr>';
   }catch(e){wins.innerHTML='<tr><td colspan="5" class="muted">Winners list is unavailable right now.</td></tr>'}
   try{const o=await j('/players/online');const el=document.getElementById('online');const sv=o.servers||{};
-    const label={'cs2-vouchers-1':'Aim / AWP','cs2-gungame-1':'Gun Game'};const ids=Object.keys(sv);
-    el.innerHTML=ids.length?ids.map(id=>'<p><strong>'+esc(label[id]||id)+'</strong>: '+sv[id].map(p=>'<a href="player.html?id='+(/^[0-9a-f]{16}$/.test(p.id)?p.id:'')+'">'+esc(p.name)+'</a> <span class="muted">'+esc(p.kills)+'/'+esc(p.deaths)+'</span>').join(', ')+'</p>').join(''):'<p class="muted">Nobody is playing right now.</p>';
+    const ids=Object.keys(sv);
+    el.innerHTML=ids.length?ids.map(id=>'<p><strong>'+esc(serverName(id))+'</strong>: '+sv[id].map(p=>'<a href="player.html?id='+(/^[0-9a-f]{16}$/.test(p.id)?p.id:'')+'">'+esc(p.name)+'</a> <span class="muted">'+esc(p.kills)+'/'+esc(p.deaths)+'</span>').join(', ')+'</p>').join(''):'<p class="muted">Nobody is playing right now.</p>';
   }catch(e){document.getElementById('online').innerHTML='<p class="muted">Online list is unavailable right now.</p>'}
 }
 refresh();setInterval(refresh,30000);

@@ -33,6 +33,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:16px 0}.card{background:#fff;border:1px solid #ddd6c6;border-radius:10px;padding:10px 14px}.card b{display:block;font-size:1.3rem;color:var(--teal)}.card span{font-size:.8rem;color:#6b7a80}
 .scroll{overflow-x:auto}td.n,th.n{text-align:right}
 </style>
+<link rel="stylesheet" href="assets/find-us.css">
 </head>
 <body>
 <header><div class="wrap"><a href="https://nordiccrypto.no"><img src="assets/lockup.svg" alt="Nordic Crypto"></a><a class="back" href="./">← CS2 server</a></div></header>
@@ -49,6 +50,8 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <p class="muted privacy">In-game names and game stats (kills, wins, playtime and more) are shown publicly on this site. Stats are linked to an anonymous ID, not your Steam profile. Your current in-game name is shown. Steam IDs, IP addresses and Steam profiles are never shown.</p>
 </main>
 <footer><div class="wrap">Run by <a href="https://nordiccrypto.no">Nordic Crypto</a>. Testnet demo. Counter-Strike 2 is a trademark of Valve Corporation; this site is not affiliated with Valve.</div></footer>
+<script src="assets/servers.js"></script>
+<script src="assets/find-us.js"></script>
 <script src="assets/stats.js"></script>
 <script>NC.online('online');NC.leaderboards('boards','lb','totals');NC.servers('servers','weapons');setInterval(()=>NC.online('online'),15000);</script>
 </body>
