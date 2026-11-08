@@ -30,6 +30,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#999;margin-right:6px}.dot.on{background:#2e9e5b}.dot.off{background:#c0392b}
 .tag{display:inline-flex;align-items:center;gap:.28em;white-space:nowrap;vertical-align:baseline;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px}.tag.c{background:#d9f0e2;color:#1d6b3d}.tag.u{background:#eee;color:#555}
 .muted{color:#6b7a80;font-size:.9rem}
+.vpqr{background:#fff;border-radius:8px;padding:6px;display:block;margin:8px 0}.vpbtn{display:inline-block;background:var(--gold);color:var(--teal);font-weight:700;padding:8px 16px;border-radius:8px;text-decoration:none}
 </style>
 <link rel="stylesheet" href="assets/feed.css">
 </head>
@@ -97,6 +98,12 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <h2>Vote for the next map</h2>
 <p>At the end of every match, on both servers, players vote for the next map. Each linked player gets a short code in chat, such as <code>cs2.nordiccrypto.no/v/K7P2Q9</code>. Open it on your phone, tap a map and approve the signature in <img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Wally. The page shows map pictures, a countdown and live results. There is one vote per linked wallet. The winner is announced in chat. If nobody votes, the next map in the rotation is played. <a href="/vote">See live votes</a>.</p>
 
+<div id="vp" hidden>
+<h3>Vote in VotePeer (testnet)</h3>
+<p>A map poll opens in <a href="https://votepeer-nexa-testnet.web.app">VotePeer</a> when each match starts. Vote during the match: scan the QR code with VotePeer on your phone, or open the link in VotePeer on your computer. At match end the server counts a provisional snapshot (ballots confirm on chain in about 2 minutes). No votes or a tie: the Wally vote or the rotation decides. Testnet only, no real value.</p>
+<div id="vp-polls"></div>
+</div>
+
 <h2>Game modes</h2>
 <p>The plugin detects the current mode on each map and round start. A match must last a minimum time and have a minimum number of human players before anyone gets a voucher. Bots never earn vouchers.</p>
 <table>
@@ -151,6 +158,20 @@ async function refresh(){
   }catch(e){wins.innerHTML='<tr><td colspan="4" class="muted">Winners list is unavailable right now.</td></tr>'}
 }
 refresh();setInterval(refresh,30000);
+
+// VotePeer map poll: shown only when the Worker's VOTEPEER_MAP_VOTE flag is on (default off).
+const vpNames={'cs2-vouchers-1':'Aim / AWP','cs2-gungame-1':'Gun Game'};
+async function votepeer(){
+  try{const d=await j('/v1/votepeer/current');const polls=(d.polls||[]).filter(p=>p.open&&/^votepeer:\/\/election\/[A-Za-z0-9_-]+\?net=testnet$/.test(p.appUrl));
+    const box=document.getElementById('vp');box.hidden=!(d.enabled&&polls.length);if(box.hidden)return;
+    document.getElementById('vp-polls').innerHTML=polls.map(p=>{
+      const qr=typeof p.qrSvg==='string'&&p.qrSvg.startsWith('<svg')?'<img class="vpqr" width="180" height="180" alt="QR code: open this poll in VotePeer" src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(p.qrSvg)+'">':'';
+      const web=/^https:\/\/votepeer-nexa-testnet\.web\.app\/#\/election\/[A-Za-z0-9_-]+$/.test(p.webUrl)?' · <a href="'+esc(p.webUrl)+'" rel="noopener" target="_blank">open on the web</a>':'';
+      return '<p><strong>'+esc(vpNames[p.serverId]||p.serverId)+'</strong>: '+p.options.map(o=>esc(o.name)).join(', ')+'</p>'+qr+'<p><a class="vpbtn" href="'+esc(p.appUrl)+'">Open in VotePeer desktop</a>'+web+'</p>';
+    }).join('');
+  }catch(e){document.getElementById('vp').hidden=true}
+}
+votepeer();setInterval(votepeer,15000);
 </script>
 </body>
 </html>
