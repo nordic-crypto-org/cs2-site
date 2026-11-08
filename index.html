@@ -50,7 +50,7 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <div class="warn">⚠ TESTNET ONLY. Vouchers are WATER, PIZZA and BURGER tokens on the <img class="nt" src="assets/nexa-testnet.png" alt="" width="16" height="16">Nexa testnet. They have no real value, cannot be cashed out or redeemed for food, goods or money, and are not Steam items.</div>
 
 <section class="feed">
-<h2>Live feed</h2>
+<h2>Live feed <a class="muted" style="font-size:.9rem;font-weight:400" href="stats.html">· Stats &amp; leaderboards →</a></h2>
 <div class="tabs" id="feed-tabs"><button data-server="" aria-pressed="true">All</button><button data-server="cs2-vouchers-1" aria-pressed="false">Aim</button><button data-server="cs2-gungame-1" aria-pressed="false">Gun Game</button></div>
 <ol id="feed" aria-live="polite"><li class="muted">Loading…</li></ol>
 <p class="muted">Kills, rounds, map changes and voucher wins from our servers, updated every few seconds. Names are in-game names; no Steam IDs.</p>
@@ -60,9 +60,12 @@ footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-
 <section class="live" aria-live="polite">
 <h2>Live</h2>
 <p id="srv"><span class="dot"></span>Loading server status…</p>
+<h3>Who's online</h3>
+<div id="online"><p class="muted">Loading…</p></div>
 <h3>Latest winners</h3>
-<table><thead><tr><th>Token</th><th>Mode</th><th>When</th><th>Status</th></tr></thead><tbody id="wins"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody></table>
-<p class="muted"><img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Unclaimed = won, but the player has not linked a wallet yet. Claimed = issued; the link opens the transaction on the Nexa testnet explorer. This winners list shows no Steam IDs or player names and updates every 30 seconds. (The live feed above shows in-game names, never Steam IDs.)</p>
+<table><thead><tr><th>Player</th><th>Token</th><th>Mode</th><th>When</th><th>Status</th></tr></thead><tbody id="wins"><tr><td colspan="5" class="muted">Loading…</td></tr></tbody></table>
+<p class="muted"><img class="ww" src="assets/wally-wallet.png" alt="Wally Wallet" width="16" height="16">Unclaimed = won, but the player has not linked a wallet yet. Claimed = issued; the link opens the transaction on the Nexa testnet explorer. Updates every 30 seconds. <a href="stats.html">Leaderboards, player pages and map stats →</a></p>
+<p class="muted privacy">In-game names and game stats (kills, wins, playtime and more) are shown publicly on this site. Steam IDs, IP addresses and Steam profiles are never shown. Change your in-game name if you do not want it listed.</p>
 </section>
 
 <h2 id="manual">Join manually</h2>
@@ -147,8 +150,12 @@ async function refresh(){
     srv.innerHTML=list.length?list.map(row).join('<br>'):'<span class="dot"></span>No status reported yet.';
   }catch(e){srv.innerHTML='<span class="dot"></span>Live status is unavailable right now. You can still try to join.'}
   try{const w=await j('/winners');const rows=w.winners||[];
-    wins.innerHTML=rows.length?rows.map(r=>'<tr><td>'+esc(r.token)+'</td><td>'+esc(r.mode)+'</td><td>'+ago(r.time)+'</td><td>'+(r.status==='Claimed'?'<span class="tag c">'+wallyIcon+'Claimed</span>'+(r.txUrl&&/^https:\/\/testnet-explorer\.nexa\.org\/tx\/[0-9a-f]{64}$/.test(r.txUrl)?' <a href="'+esc(r.txUrl)+'" rel="noopener" target="_blank">tx</a>':'')+(r.recipient?' <span class="muted">'+esc(r.recipient)+'</span>':''):'<span class="tag u">Unclaimed</span>')+'</td></tr>').join(''):'<tr><td colspan="4" class="muted">No wins yet.</td></tr>';
-  }catch(e){wins.innerHTML='<tr><td colspan="4" class="muted">Winners list is unavailable right now.</td></tr>'}
+    wins.innerHTML=rows.length?rows.map(r=>'<tr><td>'+(r.name?(r.playerId&&/^[0-9a-f]{16}$/.test(r.playerId)?'<a href="player.html?id='+r.playerId+'">'+esc(r.name)+'</a>':esc(r.name)):'<span class="muted">–</span>')+'</td><td>'+esc(r.token)+'</td><td>'+esc(r.mode)+'</td><td>'+ago(r.time)+'</td><td>'+(r.status==='Claimed'?'<span class="tag c">'+wallyIcon+'Claimed</span>'+(r.txUrl&&/^https:\/\/testnet-explorer\.nexa\.org\/tx\/[0-9a-f]{64}$/.test(r.txUrl)?' <a href="'+esc(r.txUrl)+'" rel="noopener" target="_blank">tx</a>':'')+(r.recipient?' <span class="muted">'+esc(r.recipient)+'</span>':''):'<span class="tag u">Unclaimed</span>')+'</td></tr>').join(''):'<tr><td colspan="5" class="muted">No wins yet.</td></tr>';
+  }catch(e){wins.innerHTML='<tr><td colspan="5" class="muted">Winners list is unavailable right now.</td></tr>'}
+  try{const o=await j('/players/online');const el=document.getElementById('online');const sv=o.servers||{};
+    const label={'cs2-vouchers-1':'Aim / AWP','cs2-gungame-1':'Gun Game'};const ids=Object.keys(sv);
+    el.innerHTML=ids.length?ids.map(id=>'<p><strong>'+esc(label[id]||id)+'</strong>: '+sv[id].map(p=>'<a href="player.html?id='+(/^[0-9a-f]{16}$/.test(p.id)?p.id:'')+'">'+esc(p.name)+'</a> <span class="muted">'+esc(p.kills)+'/'+esc(p.deaths)+'</span>').join(', ')+'</p>').join(''):'<p class="muted">Nobody is playing right now.</p>';
+  }catch(e){document.getElementById('online').innerHTML='<p class="muted">Online list is unavailable right now.</p>'}
 }
 refresh();setInterval(refresh,30000);
 </script>

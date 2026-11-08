@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stats & leaderboards – Nordic Crypto CS2</title>
+<meta name="description" content="Live players, leaderboards, map and server stats for the Nordic Crypto CS2 testnet servers.">
+<link rel="icon" href="assets/favicon.ico">
+<style>
+:root{--teal:#1E3A45;--gold:#D9A034;--ink:#14262e;--bg:#f6f4ef}
+*{box-sizing:border-box}body{margin:0;font:17px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:#fff;border-bottom:4px solid var(--gold)}.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}header img{height:36px}
+header a.back{color:var(--teal);font-weight:600;text-decoration:none}
+.hero{background:var(--teal);color:#fff;text-align:center;padding:48px 0 40px}.hero h1{margin:0 0 8px;font-size:2rem}
+.btn{display:inline-block;background:var(--gold);color:var(--teal);font-weight:800;font-size:1.35rem;padding:18px 40px;border-radius:12px;text-decoration:none;margin:18px 0 10px;box-shadow:0 4px 0 #a97a22}
+.btn:hover{filter:brightness(1.07)}.addr{font-family:ui-monospace,Menlo,monospace;background:rgba(255,255,255,.12);padding:4px 10px;border-radius:6px}
+.hero small a{color:#f3d48f}
+.warn{background:#fff3d6;border:2px solid var(--gold);border-radius:10px;padding:14px 18px;margin:28px 0;font-weight:600}
+h2{color:var(--teal);margin-top:36px}code,kbd{font-family:ui-monospace,Menlo,monospace;background:#e9e5da;padding:1px 6px;border-radius:4px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{border-bottom:1px solid #ddd6c6;padding:6px 8px;text-align:left}th{color:var(--teal)}
+.copy{cursor:pointer;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:6px;padding:2px 10px;font:inherit;font-size:.85rem;margin-left:6px}
+footer{margin-top:48px;padding:24px 0;background:var(--teal);color:#cfdde2;font-size:.9rem}footer a{color:#f3d48f}
+.nt{width:1em;height:1em;vertical-align:-.12em;margin-right:.15em}
+.ww{width:16px;height:16px;vertical-align:-.22em;margin:0 .22em 0 .04em;flex:none}
+.tag .ww{margin:0}
+.netbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border-radius:999px;padding:6px 14px;margin-bottom:12px;font-weight:600}.netbadge img{width:28px;height:28px}
+.live{background:#fff;border:1px solid #ddd6c6;border-radius:12px;padding:16px 20px;margin:24px 0}.live h2{margin-top:0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#999;margin-right:6px}.dot.on{background:#2e9e5b}.dot.off{background:#c0392b}
+.tag{display:inline-flex;align-items:center;gap:.28em;white-space:nowrap;vertical-align:baseline;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px}.tag.c{background:#d9f0e2;color:#1d6b3d}.tag.u{background:#eee;color:#555}
+.muted{color:#6b7a80;font-size:.9rem}
+.tabs button{font:inherit;font-size:.85rem;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:3px 12px;margin:2px;cursor:pointer}.tabs button[aria-pressed=true]{background:var(--teal);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:16px 0}.card{background:#fff;border:1px solid #ddd6c6;border-radius:10px;padding:10px 14px}.card b{display:block;font-size:1.3rem;color:var(--teal)}.card span{font-size:.8rem;color:#6b7a80}
+.scroll{overflow-x:auto}td.n,th.n{text-align:right}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="https://nordiccrypto.no"><img src="assets/lockup.svg" alt="Nordic Crypto"></a><a class="back" href="./">← CS2 server</a></div></header>
+<section class="hero"><div class="wrap"><h1>Stats & leaderboards</h1><p class="muted" style="color:#cfdde2">Nordic Crypto CS2 servers · Nexa testnet demo</p></div></section>
+<main class="wrap">
+<section class="live"><h2>Who's online</h2><div id="online"><p class="muted">Loading…</p></div></section>
+<h2>Totals</h2><div class="cards" id="totals"></div>
+<h2>Leaderboards</h2>
+<div class="tabs" id="boards"></div>
+<div class="scroll"><table><thead><tr><th>#</th><th>Player</th><th class="n">Kills</th><th class="n">K/D</th><th class="n">HS %</th><th class="n">Acc %</th><th class="n">Wins</th><th class="n">GG wins</th><th class="n">MVPs</th><th class="n">Best streak</th><th class="n">Playtime</th></tr></thead><tbody id="lb"><tr><td colspan="11" class="muted">Loading…</td></tr></tbody></table></div>
+<p class="muted">K/D and headshot % need at least 20 kills; accuracy needs 200 shots. Bots are not counted.</p>
+<h2>Servers</h2><div id="servers"><p class="muted">Loading…</p></div>
+<h2>Most-used weapons</h2><div class="scroll"><table><thead><tr><th>Weapon</th><th class="n">Kills</th></tr></thead><tbody id="weapons"></tbody></table></div>
+<p class="muted privacy">In-game names and game stats (kills, wins, playtime and more) are shown publicly on this site. Steam IDs, IP addresses and Steam profiles are never shown. Change your in-game name if you do not want it listed.</p>
+</main>
+<footer><div class="wrap">Run by <a href="https://nordiccrypto.no">Nordic Crypto</a>. Testnet demo. Counter-Strike 2 is a trademark of Valve Corporation; this site is not affiliated with Valve.</div></footer>
+<script src="assets/stats.js"></script>
+<script>NC.online('online');NC.leaderboards('boards','lb','totals');NC.servers('servers','weapons');setInterval(()=>NC.online('online'),15000);</script>
+</body>
+</html>
